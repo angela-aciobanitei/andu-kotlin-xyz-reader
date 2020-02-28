@@ -1,5 +1,6 @@
 package com.ang.acb.materialme.ui.details
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -30,6 +31,7 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 import com.google.android.material.appbar.AppBarLayout
+import dagger.android.support.AndroidSupportInjection
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -58,6 +60,13 @@ class ArticleDetailsFragment : Fragment() {
                     putLong(ARG_ARTICLE_ID, articleId)
                 }
             }
+    }
+
+    override fun onAttach(context: Context) {
+        // When using Dagger with Fragments, inject as early as possible.
+        // This prevents inconsistencies if the Fragment is reattached.
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
