@@ -3,12 +3,16 @@ package com.ang.acb.materialme.ui.common
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import com.ang.acb.materialme.R
 import dagger.android.AndroidInjection
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.support.HasSupportFragmentInjector
 import javax.inject.Inject
 
+/**
+ * An activity that inflates a layout that has a [NavHostFragment].
+ */
 class MainActivity : AppCompatActivity(), HasSupportFragmentInjector {
 
     @Inject
