@@ -23,7 +23,7 @@ interface ArticleDao {
 /**
  * The [RoomDatabase] for this app.
  */
-@Database(entities = [Article::class], exportSchema = false, version = 1)
+@Database(entities = [Article::class], exportSchema = false, version = 7)
 abstract class AppDatabase(): RoomDatabase() {
     abstract fun articlesDao(): ArticleDao
 }

@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="resource"
+            type="com.ang.acb.materialme.data.remote.Resource" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/grids_coordinator_layout"
         android:layout_width="match_parent"
@@ -50,6 +56,12 @@
                 android:clipToPadding="false"
                 android:scrollbars="none" />
         </androidx.core.widget.NestedScrollView>
+
+        <include
+            layout="@layout/network_state"
+            android:id="@+id/network_state"
+            app:resource="@{resource}" />
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

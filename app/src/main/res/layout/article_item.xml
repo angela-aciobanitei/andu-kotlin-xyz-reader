@@ -11,7 +11,7 @@
             type="com.ang.acb.materialme.data.local.Article" />
     </data>
 
-    <com.google.android.material.card.MaterialCardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/article_item_card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,6 +77,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
 </layout>

@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Generic -->
+    <dimen name="margin_mini">4dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_large">24dp</dimen>
+    <dimen name="margin_xlarge">48dp</dimen>
+    <dimen name="padding_mini">4dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_normal">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+    <dimen name="padding_xlarge">48dp</dimen>
+
     <!-- Articles grid -->
     <dimen name="item_offset">4dp</dimen>
     <dimen name="article_item_card_elevation">4dp</dimen>
@@ -23,7 +35,6 @@
     <dimen name="details_inner_vertical_margin">16dp</dimen>
     <dimen name="details_read_more_btn_padding">32dp</dimen>
     <dimen name="details_article_body_top_margin">24dp</dimen>
-
     <item name="details_line_spacing_multiplier" format="float" type="fraction">1.25</item>
 
 </resources>

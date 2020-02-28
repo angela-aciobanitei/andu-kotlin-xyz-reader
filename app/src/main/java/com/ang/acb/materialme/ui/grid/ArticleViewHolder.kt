@@ -11,6 +11,7 @@ import com.ang.acb.materialme.R
 import com.ang.acb.materialme.data.local.Article
 import com.ang.acb.materialme.databinding.ArticleItemBinding
 import com.ang.acb.materialme.util.GlideApp
+import com.ang.acb.materialme.util.getDominantColor
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
@@ -66,7 +67,9 @@ private constructor(
 
     private fun bindArticleThumbnail(article: Article) {
         // Set the aspect ratio for this image.
-        binding.articleItemThumbnail.setAspectRatio(article.aspectRatio)
+        article.aspectRatio?.let {
+            binding.articleItemThumbnail.setAspectRatio(it)
+        }
 
         GlideApp.with(binding.root.context)
             // Calling Glide.with() returns a RequestBuilder.
@@ -92,6 +95,7 @@ private constructor(
                     target: Target<Bitmap>?,
                     isFirstResource: Boolean
                 ): Boolean {
+                    imageLoadingListener(adapterPosition)
                     Timber.d("Image loading failed: %s", exception?.message)
                     return false
                 }
@@ -103,7 +107,10 @@ private constructor(
                     dataSource: DataSource?,
                     isFirstResource: Boolean
                 ): Boolean {
-                    resource?.let { generatePaletteAsync(bitmap = it) }
+                    resource?.let {
+                        generatePaletteAsync(bitmap = it)
+                    }
+                    imageLoadingListener(adapterPosition)
                     return false
                 }
             })
@@ -117,37 +124,8 @@ private constructor(
             val swatch = palette?.let { palette.getDominantColor() }
             swatch?.let {
                 binding.articleItemCardView.setCardBackgroundColor(swatch.rgb)
-                binding.articleItemCardView.strokeColor = swatch.rgb
+                // binding.articleItemCardView.strokeColor = swatch.rgb
             }
         }
     }
-
-    private fun Palette.getDominantColor(): Palette.Swatch? {
-        // Extract prominent colors from an image using the Platte class.
-        // https://developer.android.com/training/material/palette-colors
-        var result = dominantSwatch
-        if (vibrantSwatch != null) {
-            result = vibrantSwatch
-        } else if (mutedSwatch != null) {
-            result = mutedSwatch
-        }
-        return result
-    }
-
-}
-
-
-
-/**
- * Handles [Article] item click events.
- */
-class ArticleClickListener(val itemClickListener: (rootView: View, position: Int) -> Unit){
-    fun onItemClick(rootView: View, adapterPosition: Int) = itemClickListener(rootView, adapterPosition)
-}
-
-/**
- * Handles [Article] item image loading events.
- */
-class ImageLoadListener(val imageLoadingListener: (position: Int) -> Unit){
-    fun onImageLoadCompleted(position: Int) = imageLoadingListener(position)
 }

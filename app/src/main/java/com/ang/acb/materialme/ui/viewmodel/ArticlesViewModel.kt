@@ -19,6 +19,7 @@ class ArticlesViewModel @Inject constructor(
 ): ViewModel() {
 
     val articles = articlesRepository.loadAllArticles()
+
     var position = 0
 
     fun getArticleById(id: Long): LiveData<Article> = articlesRepository.getArticleById(id)

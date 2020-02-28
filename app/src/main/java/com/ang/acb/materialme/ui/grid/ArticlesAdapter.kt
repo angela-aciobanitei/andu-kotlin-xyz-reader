@@ -12,11 +12,11 @@ import com.ang.acb.materialme.data.local.Article
  */
 class ArticlesAdapter(
     val itemClickListener: (rootView: View, position: Int) -> Unit,
-    val imageLoadingListener: (position: Int) -> Unit
+    val imageLoadListener: (position: Int) -> Unit
 ) : ListAdapter<Article, ArticleViewHolder>(ArticleDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        return ArticleViewHolder.create(parent, itemClickListener, imageLoadingListener)
+        return ArticleViewHolder.create(parent, itemClickListener, imageLoadListener)
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {

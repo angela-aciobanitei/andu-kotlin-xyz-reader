@@ -7,7 +7,7 @@
     <data>
         <variable
             name="article"
-            type="com.ang.acb.materialme.data.model.Article" />
+            type="com.ang.acb.materialme.data.local.Article" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -50,7 +50,7 @@
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
-        
+
         <androidx.core.widget.NestedScrollView
             android:id="@+id/details_nested_scroll_view"
             android:layout_width="match_parent"
@@ -58,7 +58,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <include
-                android:id="@+id/content_partial_details"
+                android:id="@+id/article_details"
                 layout="@layout/content_partial_details"
                 app:article="@{article}" />
 

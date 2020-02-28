@@ -21,10 +21,9 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(ArticlesViewModel :: class)
+    @ViewModelKey(ArticlesViewModel::class)
     abstract fun bindArticlesViewModel(articlesViewModel: ArticlesViewModel): ViewModel
 
     @Binds
     abstract fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory
-
 }

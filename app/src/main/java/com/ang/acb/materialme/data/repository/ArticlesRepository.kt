@@ -16,23 +16,14 @@ class ArticlesRepository @Inject constructor(
 ) {
 
     fun loadAllArticles(): LiveData<Resource<List<Article>>> {
-        // Note that we are using the NetworkBoundResource<ResultType, RequestType> class
-        // that we've created earlier which can provide a resource backed by both the
-        // SQLite database and the network. It defines two type parameters, ResultType
-        // and RequestType, because the data type used locally might not match the data
-        // type returned from the API.
         return object : NetworkBoundResource<List<Article>, List<NetworkArticle>>(appExecutors){
             override fun createCall(): LiveData<ApiResponse<List<NetworkArticle>>> {
-                // Create the API call to load the all recipes.
                 return apiService.getAllArticles()
             }
 
             override fun saveCallResult(result: List<NetworkArticle>) {
-                // Save the result of the API response into the database.
                 articleDao.insertArticles(
-                    result.map {
-                        it.asDatabaseArticle()
-                    }
+                    result.map { it.asDatabaseArticle() }
                 )
             }
 
@@ -46,4 +37,6 @@ class ArticlesRepository @Inject constructor(
             }
         }.asLiveData()
     }
+
+    fun getArticleById(id: Long): LiveData<Article> = articleDao.getArticleById(id)
 }

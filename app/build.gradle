@@ -54,7 +54,6 @@ dependencies {
     implementation "androidx.cardview:cardview:$version_cardview"
     implementation "com.google.android.material:material:$version_material"
     implementation "androidx.fragment:fragment-ktx:$version_fragment_ktx"
-    implementation "androidx.preference:preference-ktx:$version_preferences"
     implementation "androidx.palette:palette:$version_palette"
     implementation "androidx.palette:palette-ktx:$version_palette"
 
