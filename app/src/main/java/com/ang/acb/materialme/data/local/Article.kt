@@ -19,7 +19,7 @@ data class Article(
     val author: String,
     val title: String,
     @ColumnInfo(name = "aspect_ratio")
-    val aspectRatio: Double,
+    val aspectRatio: Float,
     @ColumnInfo(name = "published_date")
     val publishedDate: String
 )

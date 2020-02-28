@@ -14,7 +14,7 @@ data class NetworkArticle(
     val thumbUrl: String,
     val author: String,
     val title: String,
-    val aspectRatio: Double,
+    val aspectRatio: Float,
     val publishedDate: String
 )
 

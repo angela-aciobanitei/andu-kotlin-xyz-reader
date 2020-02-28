@@ -55,6 +55,8 @@ dependencies {
     implementation "com.google.android.material:material:$version_material"
     implementation "androidx.fragment:fragment-ktx:$version_fragment_ktx"
     implementation "androidx.preference:preference-ktx:$version_preferences"
+    implementation "androidx.palette:palette:$version_palette"
+    implementation "androidx.palette:palette-ktx:$version_palette"
 
     // Room for Databases
     implementation "androidx.room:room-runtime:$version_room"

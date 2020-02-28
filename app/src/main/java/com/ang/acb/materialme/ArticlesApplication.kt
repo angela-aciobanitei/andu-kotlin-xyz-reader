@@ -3,6 +3,7 @@ package com.ang.acb.materialme
 import android.app.Activity
 import android.app.Application
 import com.ang.acb.materialme.di.DaggerAppComponent
+import com.ang.acb.materialme.BuildConfig
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import timber.log.Timber

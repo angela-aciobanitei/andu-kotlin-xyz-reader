@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://www.reddit.com/r/androiddev/comments/2xd459/having_issues_creating_a_working_staggered_grid/ -->
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="article"
+            type="com.ang.acb.materialme.data.local.Article" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/article_item_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/item_offset"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardElevation="@dimen/article_item_card_elevation"
+        app:cardCornerRadius="@dimen/article_item_card_corner_radius">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.ang.acb.materialme.util.AspectRatioImageView
+                android:id="@+id/article_item_thumbnail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/article_thumbnail"
+                android:adjustViewBounds="true"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_height="300dp"
+                tools:background="@tools:sample/backgrounds/scenic"/>
+
+            <TextView
+                android:id="@+id/article_item_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:paddingStart="@dimen/article_item_horizontal_padding"
+                android:paddingEnd="@dimen/article_item_horizontal_padding"
+                android:paddingTop="@dimen/article_item_vertical_padding"
+                android:paddingBottom="4dp"
+                android:text="@{article.title}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textColor="@android:color/white"
+                app:layout_constraintTop_toBottomOf="@id/article_item_thumbnail"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:textColor="@android:color/black"
+                tools:text="Ebooks, Neither E, Nor Books" />
+
+            <TextView
+                android:id="@+id/article_item_subtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingStart="@dimen/article_item_horizontal_padding"
+                android:paddingEnd="@dimen/article_item_horizontal_padding"
+                android:paddingBottom="@dimen/article_item_vertical_padding"
+                android:text="@{article.author}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textColor="@color/ltgray"
+                app:layout_constraintTop_toBottomOf="@id/article_item_title"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                tools:textColor="@android:color/black"
+                tools:text="Cory Doctorow"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
