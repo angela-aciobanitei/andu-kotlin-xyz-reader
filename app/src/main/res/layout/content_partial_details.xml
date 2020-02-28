@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="article"
+            type="com.ang.acb.materialme.data.local.Article" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:toggleVisibility="@{article != null}">
+
+        <LinearLayout
+            android:id="@+id/meta_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="@dimen/details_metabar_vertical_margin"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/details_inner_horizontal_margin"
+            android:paddingTop="@dimen/details_metabar_vertical_padding"
+            android:paddingRight="@dimen/details_inner_horizontal_margin"
+            android:paddingBottom="@dimen/details_metabar_vertical_padding">
+
+            <TextView
+                android:id="@+id/article_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="@fraction/details_line_spacing_multiplier"
+                android:paddingBottom="@dimen/details_metabar_title_bottom_padding"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"
+                tools:text="Ebooks, Neither E, Nor Books" />
+
+            <TextView
+                android:id="@+id/article_byline"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="@fraction/details_line_spacing_multiplier"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                android:textColor="@android:color/white"
+                tools:text="Cory Doctorow" />
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/share_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/meta_bar"
+            android:layout_marginEnd="@dimen/details_fab_margin_end"
+            android:layout_marginTop="@dimen/details_fab_margin_top"
+            android:contentDescription="@string/action_share"
+            android:src="@drawable/ic_share_white_24dp"
+            app:backgroundTint="@color/colorAccent"
+            app:borderWidth="@dimen/details_fab_border_width"
+            app:elevation="@dimen/details_fab_elevation"
+            app:fabSize="normal"/>
+
+        <TextView
+            android:id="@+id/article_body"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/details_inner_horizontal_margin"
+            android:layout_marginRight="@dimen/details_inner_horizontal_margin"
+            android:layout_marginTop="@dimen/details_article_body_top_margin"
+            android:layout_marginBottom="@dimen/details_inner_vertical_margin"
+            android:layout_below="@+id/meta_bar"
+            android:textColorLink="@color/colorAccent"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:lineSpacingMultiplier="@fraction/details_line_spacing_multiplier"
+            tools:text="@tools:sample/lorem/random" />
+
+        <Button
+            android:id="@+id/read_more_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/article_body"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/details_inner_vertical_margin"
+            android:layout_marginBottom="88dp"
+            android:layout_marginEnd="@dimen/details_inner_horizontal_margin"
+            android:layout_marginStart="@dimen/details_inner_horizontal_margin"
+            android:paddingStart="@dimen/details_read_more_btn_padding"
+            android:paddingEnd="@dimen/details_read_more_btn_padding"
+            android:text="@string/read_more"
+            android:textColor="@android:color/white"
+            android:background="@color/colorAccent"
+            android:visibility="visible"/>
+    </RelativeLayout>
+
+</layout>

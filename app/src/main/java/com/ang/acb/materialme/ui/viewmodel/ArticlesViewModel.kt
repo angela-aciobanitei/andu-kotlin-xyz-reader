@@ -3,6 +3,7 @@ package com.ang.acb.materialme.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ang.acb.materialme.data.local.Article
 import com.ang.acb.materialme.data.repository.ArticlesRepository
 import com.ang.acb.materialme.util.Event
 import javax.inject.Inject
@@ -18,14 +19,8 @@ class ArticlesViewModel @Inject constructor(
 ): ViewModel() {
 
     val articles = articlesRepository.loadAllArticles()
+    var position = 0
 
-    // Handles navigation to the selected article details.
-    private val _navigateToArticleDetails = MutableLiveData<Event<Int?>>()
-    val navigateToArticleDetails: LiveData<Event<Int?>>
-        get() = _navigateToArticleDetails
+    fun getArticleById(id: Long): LiveData<Article> = articlesRepository.getArticleById(id)
 
-    fun navigateToArticleDetailsEvent(id: Int?) {
-        // Trigger the event by setting a new Event as a new value.
-        _navigateToArticleDetails.value = Event(id)
-    }
 }

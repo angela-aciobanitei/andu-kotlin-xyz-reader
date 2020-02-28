@@ -23,19 +23,22 @@ import timber.log.Timber
 class ArticleViewHolder
 private constructor(
     val binding: ArticleItemBinding,
-    val articleListener: ArticleItemListener)
-    : RecyclerView.ViewHolder(binding.root) {
+    val itemClickListener: (rootView: View, position: Int) -> Unit,
+    val imageLoadingListener: (position: Int) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
     companion object {
         fun create(
             parent: ViewGroup,
-            articleListener: ArticleItemListener
+            itemClickListener: (rootView: View, position: Int) -> Unit,
+            imageLoadingListener: (position: Int) -> Unit
         ): ArticleViewHolder {
             val inflater = LayoutInflater.from(parent.context)
             val binding = ArticleItemBinding.inflate(inflater, parent, false)
             return ArticleViewHolder(
                 binding,
-                articleListener
+                itemClickListener,
+                imageLoadingListener
             )
         }
     }
@@ -54,7 +57,7 @@ private constructor(
 
         // Handle article items click events.
         binding.articleItemCardView.setOnClickListener{
-            articleListener.onItemClicked(it, adapterPosition)
+            itemClickListener(it, adapterPosition)
         }
 
         // Binding must be executed immediately.
@@ -133,10 +136,18 @@ private constructor(
 
 }
 
+
+
 /**
- * A listener that is attached to all ViewHolders to handle image loading events and clicks.
+ * Handles [Article] item click events.
  */
-interface ArticleItemListener {
-    fun onItemClicked(rootView: View?, adapterPosition: Int)
-    fun onLoadCompleted(adapterPosition: Int)
+class ArticleClickListener(val itemClickListener: (rootView: View, position: Int) -> Unit){
+    fun onItemClick(rootView: View, adapterPosition: Int) = itemClickListener(rootView, adapterPosition)
+}
+
+/**
+ * Handles [Article] item image loading events.
+ */
+class ImageLoadListener(val imageLoadingListener: (position: Int) -> Unit){
+    fun onImageLoadCompleted(position: Int) = imageLoadingListener(position)
 }

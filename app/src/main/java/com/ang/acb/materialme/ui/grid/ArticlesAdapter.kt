@@ -1,5 +1,6 @@
 package com.ang.acb.materialme.ui.grid
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,11 +11,12 @@ import com.ang.acb.materialme.data.local.Article
  * A custom [ListAdapter] for the [Article] list.
  */
 class ArticlesAdapter(
-    val articleListener: ArticleItemListener
+    val itemClickListener: (rootView: View, position: Int) -> Unit,
+    val imageLoadingListener: (position: Int) -> Unit
 ) : ListAdapter<Article, ArticleViewHolder>(ArticleDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        return ArticleViewHolder.create(parent, articleListener)
+        return ArticleViewHolder.create(parent, itemClickListener, imageLoadingListener)
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
