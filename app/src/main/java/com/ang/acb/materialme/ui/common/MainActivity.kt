@@ -1,7 +1,8 @@
-package com.ang.acb.materialme
+package com.ang.acb.materialme.ui.common
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ang.acb.materialme.R
 
 class MainActivity : AppCompatActivity() {
 

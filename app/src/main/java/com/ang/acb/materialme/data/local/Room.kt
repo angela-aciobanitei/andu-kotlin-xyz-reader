@@ -13,7 +13,7 @@ interface ArticleDao {
     fun insertArticles(articles: List<Article>)
 
     @Query("SELECT * FROM article WHERE id = :id")
-    fun getArticleById(id: Long)
+    fun getArticleById(id: Long): LiveData<Article>
 
     @Transaction
     @Query("SELECT * FROM article")
