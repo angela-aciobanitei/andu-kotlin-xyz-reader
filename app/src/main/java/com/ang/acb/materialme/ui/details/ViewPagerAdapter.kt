@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.ang.acb.materialme.data.local.Article
 
 /**
- * A simple pager adapter that manages each page in the articles [ViewPager]
+ * A simple pager adapter that manages each page in the articles ViewPager.
  */
 class ViewPagerAdapter(
     fragmentManager: FragmentManager,

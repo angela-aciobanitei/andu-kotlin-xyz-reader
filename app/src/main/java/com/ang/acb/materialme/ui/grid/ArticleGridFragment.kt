@@ -24,7 +24,6 @@ import com.ang.acb.materialme.ui.details.ArticlesPagerFragment
 import com.ang.acb.materialme.ui.viewmodel.ArticlesViewModel
 import com.ang.acb.materialme.util.autoCleared
 import dagger.android.support.AndroidSupportInjection
-import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -39,7 +38,7 @@ class ArticleGridFragment : Fragment() {
 
     // Note: multiple fragments can share a ViewModel using their activity scope.
     // https://developer.android.com/topic/libraries/architecture/viewmodel#sharing
-    private val viewModel: ArticlesViewModel by activityViewModels { viewModelFactory }
+    private val sharedViewModel: ArticlesViewModel by activityViewModels { viewModelFactory }
 
     private var binding: FragmentArticleGridBinding by autoCleared()
     private var adapter: ArticlesAdapter by autoCleared()
@@ -57,10 +56,8 @@ class ArticleGridFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate layout for this fragment and get an instance of the binding class.
+        // Inflate layout for this fragment.
         binding = FragmentArticleGridBinding.inflate(inflater)
-
-        // Allow data binding to observe LiveData with the lifecycle of this fragment.
         binding.lifecycleOwner = this
 
         return binding.root
@@ -115,7 +112,7 @@ class ArticleGridFragment : Fragment() {
             ) {
                 // Locate the ViewHolder for the clicked position.
                 val selectedViewHolder = binding.articlesRecyclerView
-                    .findViewHolderForAdapterPosition(viewModel.position)
+                    .findViewHolderForAdapterPosition(sharedViewModel.currentPosition)
                 if (selectedViewHolder?.itemView == null) return
                 // We are only interested in a single ImageView transition from the grid to the
                 // fragment the view pager holds, so the mapping only needs to be adjusted for
@@ -137,11 +134,9 @@ class ArticleGridFragment : Fragment() {
 
     private fun handleItemClicks(rootView: View, position: Int) {
         // Save current position to view model.
-        viewModel.position = position
+        sharedViewModel.currentPosition = position
 
-        // Exclude the clicked card from the exit transition (the card
-        // will disappear immediately instead of fading out with the
-        // rest to prevent an overlapping animation of fade and move).
+        // Exclude the clicked card from the exit transition.
         (exitTransition as TransitionSet).excludeTarget(rootView, true)
 
         // Create the shared element transition extras.
@@ -149,6 +144,7 @@ class ArticleGridFragment : Fragment() {
         val extras = FragmentNavigator.Extras.Builder()
             .addSharedElement(transitioningView, transitioningView.transitionName)
             .build()
+
         // Navigate to destination, passing in the shared element as extras.
         NavHostFragment.findNavController(this).navigate(
             R.id.action_from_articles_grid_to_articles_pager,
@@ -157,7 +153,7 @@ class ArticleGridFragment : Fragment() {
     }
 
     private fun schedulePostponedEnterTransition(position: Int) {
-        if (viewModel.position != position) return
+        if (sharedViewModel.currentPosition != position) return
         if (isEnterTransitionStarted.getAndSet(true)) return
         // Before calling startPostponedEnterTransition(), make sure that the view is drawn.
         binding.articlesRecyclerView.viewTreeObserver.addOnPreDrawListener(
@@ -173,7 +169,7 @@ class ArticleGridFragment : Fragment() {
     }
 
     private fun populateUi() {
-        viewModel.articles.observe(viewLifecycleOwner, Observer { resource ->
+        sharedViewModel.articles.observe(viewLifecycleOwner, Observer { resource ->
             // Note: after calling postponeEnterTransition(), don't forget
             // to call startPostponedEnterTransition(). Forgetting to do so
             // will leave your application in a state of deadlock, preventing
@@ -200,7 +196,8 @@ class ArticleGridFragment : Fragment() {
                 binding.articlesRecyclerView.removeOnLayoutChangeListener(this)
                 val layoutManager =
                     binding.articlesRecyclerView.layoutManager
-                val viewAtPosition = layoutManager?.findViewByPosition(viewModel.position)
+                val viewAtPosition =
+                    layoutManager?.findViewByPosition(sharedViewModel.currentPosition)
                 // Scroll to position if the view for the current position is null (not
                 // currently part of layout manager children), or it's not completely visible.
                 if (viewAtPosition == null || layoutManager.isViewPartiallyVisible(
@@ -208,7 +205,7 @@ class ArticleGridFragment : Fragment() {
                     )
                 ) {
                     binding.articlesRecyclerView.post {
-                        layoutManager?.scrollToPosition(viewModel.position)
+                        layoutManager?.scrollToPosition(sharedViewModel.currentPosition)
                     }
                 }
             }

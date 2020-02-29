@@ -45,7 +45,6 @@ private constructor(
     }
 
     fun bind(article: Article) {
-        // Bind article data (title, subtitle and thumbnail)
         binding.article = article
         bindArticleThumbnail(article)
 
@@ -66,23 +65,20 @@ private constructor(
     }
 
     private fun bindArticleThumbnail(article: Article) {
-        // Set the aspect ratio for this image.
         binding.articleItemThumbnail.setAspectRatio(article.aspectRatio)
 
-
         GlideApp.with(binding.root.context)
-            // Calling Glide.with() returns a RequestBuilder.
-            // By default you get a RequestBuilder<Drawable>, but
-            // you can change the requested type using as... methods.
-            // For example, asBitmap() returns a RequestListener<Bitmap>.
+            // Calling Glide.with() returns a RequestBuilder. By
+            // default, you get a RequestBuilder<Drawable>, but you
+            // can change the requested type using as... methods. For
+            // example, asBitmap() returns a RequestListener<Bitmap>.
             .asBitmap()
             .load(article.thumbUrl)
-            // Tell Glide not to use its standard crossfade animation.
+            // Tell Glide not to use its standard cross-fade animation.
             .dontAnimate()
             // Display a placeholder until the image is loaded and processed.
             .placeholder(R.drawable.loading_animation)
-            // Provide an error placeholder when Glide is unable to load the
-            // image. This will be shown for the non-existing-url.
+            // Provide an error placeholder for non-existing urls.
             .error(R.color.photoPlaceholder)
             // Use fallback image resource when the url can be null.
             .fallback(R.color.photoPlaceholder)

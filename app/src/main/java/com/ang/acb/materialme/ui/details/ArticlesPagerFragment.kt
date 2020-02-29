@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.core.app.SharedElementCallback
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter.*
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -19,7 +18,6 @@ import androidx.viewpager.widget.ViewPager.SimpleOnPageChangeListener
 import com.ang.acb.materialme.R
 import com.ang.acb.materialme.ui.grid.ArticleGridFragment
 import com.ang.acb.materialme.ui.viewmodel.ArticlesViewModel
-import com.ang.acb.materialme.util.autoCleared
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -34,9 +32,7 @@ class ArticlesPagerFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    // Note: multiple fragments can share a ViewModel using their activity scope.
-    // https://developer.android.com/topic/libraries/architecture/viewmodel#sharing
-    private val viewModel: ArticlesViewModel by activityViewModels { viewModelFactory }
+    private val sharedViewModel: ArticlesViewModel by activityViewModels { viewModelFactory }
 
     private lateinit var viewPagerAdapter: ViewPagerAdapter
     private lateinit var articlesViewPager: ViewPager
@@ -73,8 +69,7 @@ class ArticlesPagerFragment : Fragment() {
     }
 
     private fun setupViewPager(view: View) {
-        // Because ArticlesPagerFragment contains a series of article details fragments
-        // we need to initialize the view pager adapter with the child fragment manager.
+        // For managing Fragments inside of this Fragment, use childFragmentManager
         viewPagerAdapter = ViewPagerAdapter(
             childFragmentManager,
             BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
@@ -84,20 +79,20 @@ class ArticlesPagerFragment : Fragment() {
         articlesViewPager.addOnPageChangeListener(
             object : SimpleOnPageChangeListener() {
                 override fun onPageSelected(position: Int) {
-                    viewModel.position = position
+                    sharedViewModel.currentPosition = position
                 }
             })
     }
 
     private fun populateUi() {
-        viewModel.articles.observe(viewLifecycleOwner, Observer { resource ->
+        sharedViewModel.articles.observe(viewLifecycleOwner, Observer { resource ->
                 if (resource?.data != null) {
                     // Update data in the view pager adapter.
                     viewPagerAdapter.submitList(resource.data)
                     // Set the currently selected page for the view pager.
                     // To transition immediately, set smoothScroll to false.
                     articlesViewPager.setCurrentItem(
-                        viewModel.position, false
+                        sharedViewModel.currentPosition, false
                     )
                 }
             }
@@ -130,7 +125,7 @@ class ArticlesPagerFragment : Fragment() {
                 // with the current position. At this stage, the method will simply return
                 // the fragment at the position and will not create a new one.
                 val currentFragment = viewPagerAdapter.instantiateItem(
-                        articlesViewPager, viewModel.position
+                        articlesViewPager, sharedViewModel.currentPosition
                     ) as Fragment
                 // Get the root view for the current fragment layout.
                 val rootView = currentFragment.view ?: return

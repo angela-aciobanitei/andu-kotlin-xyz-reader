@@ -1,11 +1,9 @@
 package com.ang.acb.materialme.ui.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ang.acb.materialme.data.local.Article
 import com.ang.acb.materialme.data.repository.ArticlesRepository
-import com.ang.acb.materialme.util.Event
 import javax.inject.Inject
 
 /**
@@ -20,7 +18,7 @@ class ArticlesViewModel @Inject constructor(
 
     val articles = articlesRepository.loadAllArticles()
 
-    var position = 0
+    var currentPosition = 0
 
     fun getArticleById(id: Long): LiveData<Article> = articlesRepository.getArticleById(id)
 

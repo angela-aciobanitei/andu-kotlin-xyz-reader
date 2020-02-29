@@ -26,7 +26,7 @@ import com.ang.acb.materialme.data.local.Article
 import com.ang.acb.materialme.databinding.FragmentArticleDetailsBinding
 import com.ang.acb.materialme.ui.viewmodel.ArticlesViewModel
 import com.ang.acb.materialme.util.GlideApp
-import com.ang.acb.materialme.util.Utils
+import com.ang.acb.materialme.util.FormatUtils
 import com.ang.acb.materialme.util.autoCleared
 import com.ang.acb.materialme.util.getDominantColor
 import com.bumptech.glide.load.DataSource
@@ -40,7 +40,6 @@ import javax.inject.Inject
 
 
 private const val ARG_ARTICLE_ID = "ARG_ARTICLE_ID"
-private const val INVALID_ARTICLE_ID = -1
 
 class ArticleDetailsFragment : Fragment() {
 
@@ -183,8 +182,8 @@ class ArticleDetailsFragment : Fragment() {
 
         binding.articleDetails.articleTitle.text = article.title
         binding.articleDetails.articleByline.text =
-            Utils.formatPublishedDate(article.publishedDate)?.let {
-                Utils.formatArticleByline(it, article.author)
+            FormatUtils.formatPublishedDate(article.publishedDate)?.let {
+                FormatUtils.formatArticleByline(it, article.author)
             }
 
         binding.articleDetails.articleBody.text = Html.fromHtml(article.body
