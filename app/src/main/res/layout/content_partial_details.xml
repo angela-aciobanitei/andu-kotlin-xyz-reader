@@ -68,14 +68,15 @@
             android:id="@+id/article_body"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/details_inner_horizontal_margin"
-            android:layout_marginRight="@dimen/details_inner_horizontal_margin"
-            android:layout_marginTop="@dimen/details_article_body_top_margin"
-            android:layout_marginBottom="@dimen/details_inner_vertical_margin"
             android:layout_below="@+id/meta_bar"
-            android:textColorLink="@color/colorAccent"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_marginLeft="@dimen/details_inner_horizontal_margin"
+            android:layout_marginTop="@dimen/details_article_body_top_margin"
+            android:layout_marginRight="@dimen/details_inner_horizontal_margin"
+            android:layout_marginBottom="@dimen/details_inner_vertical_margin"
+            android:fontFamily="@font/carme"
             android:lineSpacingMultiplier="@fraction/details_line_spacing_multiplier"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+            android:textColorLink="@color/colorAccent"
             tools:text="@tools:sample/lorem/random" />
 
         <Button
