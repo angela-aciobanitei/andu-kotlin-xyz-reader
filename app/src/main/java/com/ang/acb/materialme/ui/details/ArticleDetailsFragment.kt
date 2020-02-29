@@ -8,8 +8,11 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewGroup.MarginLayoutParams
 import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.app.ShareCompat
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
@@ -33,7 +36,6 @@ import com.bumptech.glide.request.target.Target
 import com.google.android.material.appbar.AppBarLayout
 import dagger.android.support.AndroidSupportInjection
 import timber.log.Timber
-import java.util.*
 import javax.inject.Inject
 
 
@@ -100,12 +102,31 @@ class ArticleDetailsFragment : Fragment() {
 
     private fun setupToolbar() {
         (activity as AppCompatActivity).setSupportActionBar(binding.detailsToolbar)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding.detailsToolbar.setNavigationOnClickListener {
             // Attempts to navigate up in the navigation hierarchy.
             findNavController(this).navigateUp()
-
-            (activity as AppCompatActivity).supportActionBar?.setDisplayShowTitleEnabled(false)
         }
+
+        applyWindowInsets(binding.detailsCoordinatorLayout, binding.detailsToolbar)
+    }
+
+    private fun applyWindowInsets(
+        coordinatorLayout: CoordinatorLayout,
+        toolbar: Toolbar
+    ) {
+        // See: https://chris.banes.dev/2019/04/12/insets-listeners-to-layouts/
+        ViewCompat.setOnApplyWindowInsetsListener(coordinatorLayout) { view, insets ->
+            // Apply insets for toolbar.
+            val toolbarLayoutParams =
+                toolbar.layoutParams as MarginLayoutParams
+            toolbarLayoutParams.topMargin = insets.systemWindowInsetTop
+            toolbar.layoutParams = toolbarLayoutParams
+            // Clear listener to ensure that insets won't be reapplied.
+            view.setOnApplyWindowInsetsListener(null)
+            insets.consumeSystemWindowInsets()
+        }
+        ViewCompat.requestApplyInsets(coordinatorLayout)
     }
 
     private fun setToolbarTitleIfCollapsed(article: Article) {
@@ -162,13 +183,8 @@ class ArticleDetailsFragment : Fragment() {
 
         binding.articleDetails.articleTitle.text = article.title
         binding.articleDetails.articleByline.text =
-            article.publishedDate?.let {
-                Utils.formatPublishedDate(it)?.let {
-                    Utils.formatArticleByline(
-                        publishedDate = it,
-                        author = article.author
-                    )
-                }
+            Utils.formatPublishedDate(article.publishedDate)?.let {
+                Utils.formatArticleByline(it, article.author)
             }
 
         binding.articleDetails.articleBody.text = Html.fromHtml(article.body

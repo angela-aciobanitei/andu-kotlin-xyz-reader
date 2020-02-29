@@ -24,6 +24,7 @@ import com.ang.acb.materialme.ui.details.ArticlesPagerFragment
 import com.ang.acb.materialme.ui.viewmodel.ArticlesViewModel
 import com.ang.acb.materialme.util.autoCleared
 import dagger.android.support.AndroidSupportInjection
+import java.util.*
 import java.util.concurrent.atomic.AtomicBoolean
 import javax.inject.Inject
 
@@ -73,7 +74,7 @@ class ArticleGridFragment : Fragment() {
         setupRecyclerView()
         setupAdapter()
         populateUi()
-        // TODO scrollToPosition()
+        scrollToPosition()
     }
 
     private fun setupToolbar() {
@@ -181,6 +182,35 @@ class ArticleGridFragment : Fragment() {
             binding.resource = resource
             if (resource?.data != null) {
                 adapter.submitList(resource.data)
+            }
+        })
+    }
+
+    /**
+     * Scrolls the recycler view to show the last viewed item in the grid.
+     * This is important when navigating back from the grid.
+     */
+    private fun scrollToPosition() {
+        binding.articlesRecyclerView.addOnLayoutChangeListener(object :
+            View.OnLayoutChangeListener {
+            override fun onLayoutChange(
+                view: View, left: Int, top: Int, right: Int, bottom: Int,
+                oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int
+            ) {
+                binding.articlesRecyclerView.removeOnLayoutChangeListener(this)
+                val layoutManager =
+                    binding.articlesRecyclerView.layoutManager
+                val viewAtPosition = layoutManager?.findViewByPosition(viewModel.position)
+                // Scroll to position if the view for the current position is null (not
+                // currently part of layout manager children), or it's not completely visible.
+                if (viewAtPosition == null || layoutManager.isViewPartiallyVisible(
+                        viewAtPosition, false, true
+                    )
+                ) {
+                    binding.articlesRecyclerView.post {
+                        layoutManager?.scrollToPosition(viewModel.position)
+                    }
+                }
             }
         })
     }

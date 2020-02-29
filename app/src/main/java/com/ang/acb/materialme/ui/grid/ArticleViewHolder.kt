@@ -67,9 +67,8 @@ private constructor(
 
     private fun bindArticleThumbnail(article: Article) {
         // Set the aspect ratio for this image.
-        article.aspectRatio?.let {
-            binding.articleItemThumbnail.setAspectRatio(it)
-        }
+        binding.articleItemThumbnail.setAspectRatio(article.aspectRatio)
+
 
         GlideApp.with(binding.root.context)
             // Calling Glide.with() returns a RequestBuilder.
