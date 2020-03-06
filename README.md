@@ -1,6 +1,6 @@
 ## XYZReader
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/70b6641da6644e78a785d66b997dd83e)](https://app.codacy.com/manual/angela-aciobanitei/andu-kotlin-xyz-reader?utm_source=github.com&utm_medium=referral&utm_content=angela-aciobanitei/andu-kotlin-xyz-reader&utm_campaign=Badge_Grade_Dashboard)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/70b6641da6644e78a785d66b997dd83e)](https://app.codacy.com/manual/angela-aciobanitei/andu-kotlin-xyz-reader?utm_source=github.com&utm_medium=referral&utm_content=angela-aciobanitei/andu-kotlin-xyz-reader&utm_campaign=Badge_Grade_Dashboard) [![codebeat badge](https://codebeat.co/badges/072872e4-3d10-4aad-b2e4-2ec17050ef67)](https://codebeat.co/projects/github-com-angela-aciobanitei-andu-kotlin-xyz-reader-master)
 
 Redesign an app to follow the Material Design guidelines and translate a set of static design mocks to a living 
 and breathing app.
